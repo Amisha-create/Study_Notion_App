@@ -11,7 +11,6 @@ const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
-const cors = require("cors");
 app.use(cors({
   origin:"https://study-notion-app-3j6u.vercel.app/",
   credentials:true
