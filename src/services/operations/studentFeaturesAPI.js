@@ -40,7 +40,7 @@ export async function buyCourse (token, courses, userDetails, navigate, dispatch
         return;
         }
     const orderResponse = await apiConnector("POST", COURSE_PAYMENT_API, {courses},{
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
     })
     if(!orderResponse.data.success){
         toast.error(orderResponse.data.message)
@@ -69,11 +69,12 @@ export async function buyCourse (token, courses, userDetails, navigate, dispatch
         theme: {
             color: "#686CFD",
         },
-    };
+    }
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
     paymentObject.on("payment.failed", function (response) {
         toast.error("Payment Failed");
+        console.log(response.error);
     });
     toast.dismiss(toastId);
 
@@ -98,7 +99,7 @@ async function sendPaymentSuccessEmail (response,amount,token) {
         paymentId:response.razorpay_payment_id,
         orderId:response.razorpay_order_id,
     }, {
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
     });
     if (!res.success) {
         console.log(res.message);
@@ -122,7 +123,7 @@ async function verifypament (response,courses,token,navigate,dispatch,) {
             razorpay_signature: response.razorpay_signature,
             courses:courses.courses || courses,
         }, {
-            Authorisation: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         });
         console.log("verifypament -> res", res)
         if (!res.data.success) {
